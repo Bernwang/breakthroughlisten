@@ -22,4 +22,6 @@ Usage:
   - Initialize the tool with `constraints`: `tool = GBTObservables(constraints)`.
   - Generate table of observable targets for `n`-th schedule (*zero-endexed*): `table = tool.getTargets(n)`.
   
+  - Get information about scheduled observation for confirmation: `tool.viewSchedule(n)`
+  
   - View table in browser: `table.show_in_browser(jsviewer=True)`
