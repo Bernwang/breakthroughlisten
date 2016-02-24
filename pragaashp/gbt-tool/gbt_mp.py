@@ -41,7 +41,7 @@ def mp_build(nprocs,operator,data):
     def worker(partition,out_queue):
         output = []
         for t_id,t_ra,t_dec in partition:
-            output.append(operator(coord=SkyCoord(ra=t_ra*u.deg,dec=t_dec*u.deg),name=t_id))
+            output.append(operator(coord=SkyCoord(ra=t_ra*u.hr,dec=t_dec*u.deg),name=t_id))
         out_queue.put(output)
 
     out_queue = Queue()
