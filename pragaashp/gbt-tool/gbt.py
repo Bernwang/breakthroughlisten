@@ -26,6 +26,10 @@ class GBTObservables():
 		scraper.make()
 		return scraper.btlpSchedule
 
+	def viewSchedule(self,event_index):
+		assert event_index < len(self.schedule), "Event Index out of range."
+		return self.schedule[event_index]
+
 	def getTargets(self,event_index):
 		assert event_index < len(self.schedule), "Event Index out of range."
 		e = self.schedule[event_index]

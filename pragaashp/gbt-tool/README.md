@@ -20,6 +20,6 @@ Usage:
     > `constraints = [AltitudeConstraint(40*u.deg,80*u.deg), SunSeparationConstraint(20*u.deg)]`.
 
   - Initialize the tool with `constraints`: `tool = GBTObservables(constraints)`.
-  - Generate table of `n`-th observable target (*zero-indexed*): `table = tool.getTargets(n)`.
+  - Generate table of observable targets for `n`-th schedule (*zero-endexed*): `table = tool.getTargets(n)`.
   
   - View table in browser: `table.show_in_browser(jsviewer=True)`
