@@ -2,7 +2,11 @@
 
 Tool to isolate observable targets (from a database) using times scraped from the GBT Schedule.
 
-Usage: 
+**Update:** 
+
+  - Script updated to utilize Multiprocessing to allow up to 1.7x speedup over previous version.
+
+**Usage:**
 
 *Terminal*
 
@@ -22,6 +26,8 @@ Usage:
   - Initialize the tool with `constraints`: `tool = GBTObservables(constraints)`.
   - Generate table of observable targets for `n`-th schedule (*zero-endexed*): `table = tool.getTargets(n)`.
   
-  - Get information about scheduled observation for confirmation: `tool.viewSchedule(n)`
+  - Get information about scheduled observation: `tool.viewSchedule(n)` or confirm schedule for current table:
+    
+    > `table.meta['start_time']` and `table.meta['end_time']`.
   
   - View table in browser: `table.show_in_browser(jsviewer=True)`

@@ -35,8 +35,8 @@ class GBTObservables():
 		e = self.schedule[event_index]
 		gbfilter = GBTFilter(getpass(),e.start,e.end,self.constraints)
 		result_table = gbfilter.applyFilter()
-		result_table.meta['start date-time'] = e.start
-		result_table.meta['end date-time'] = e.end
+		result_table.meta['start_time'] = e.start
+		result_table.meta['end_time'] = e.end
 		return result_table
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
@@ -49,7 +49,7 @@ Set Constraints -> Initialize Class -> Get Schedule Info -> Get Observable Targe
 """
 if __name__ == "__main__":
 	# - - - - - - MODIFY CONSTRAINTS HERE - - - - - - - - #
-	constraints = [AltitudeConstraint(40*u.deg,80*u.deg)]
+	constraints = [AltitudeConstraint(None,None)]
 	# - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	gbto = GBTObservables(constraints)
-	gbto.getTargets(0).show_in_browser(jsviewer=True)
+	gbto.getTargets(0).show_in_browser(jsviewer=True) 

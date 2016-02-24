@@ -6,11 +6,10 @@ astroplan.
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
 from time import mktime, gmtime, strptime, strftime
-from itertools import compress
+from gbt_mp import *
 import astropy.units as u
 from astropy.time import Time
 from astropy.table import Table
-from astropy.coordinates import SkyCoord
 from pytz import timezone
 from astroplan import Observer, FixedTarget, is_observable
 from sqlalchemy import create_engine, orm
@@ -18,7 +17,7 @@ from sqlalchemy.ext.automap import automap_base
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
-from astropy.utils import iers
+from astropy.utils import iers 
 iers.IERS.iers_table = iers.IERS_A.open(iers.IERS_A_URL)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
@@ -43,11 +42,15 @@ class GBTFilter():
 	def __get_targets__(self):
 		Base = automap_base()
 		Base.prepare(self.engine,reflect=True)
-		T = Base.classes.targets
+		T = Base.classes.observing_queue_v1
 		session = orm.Session(self.engine)
-		targets = [FixedTarget(coord=SkyCoord(ra=t_ra*u.deg,dec=t_dec*u.deg),name=t_id) \
-				   for t_id,t_ra,t_dec in session.query(T.target_id, T.ra, T.decl).\
-				   order_by(T.target_id)]
+		# - - - - - - - - - - - - - - - - UNIPROCESS EXECUTION - - - - - - - - - - - - - - - #
+		# targets = [FixedTarget(coord=SkyCoord(ra=t_ra*u.deg,dec=t_dec*u.deg),name=t_id) \  #
+		# 		   for t_id,t_ra,t_dec in session.query(T.gal_id, T.ra, T.decl).\			 #
+		# 		   order_by(T.gal_id)]														 #
+		# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -#
+		data = session.query(T.gal_id, T.ra, T.decl).order_by(T.gal_id).all()
+		targets = mp_build(8,FixedTarget,data)
 		session.close()
 		return targets
 
@@ -57,10 +60,20 @@ class GBTFilter():
 		return strftime(time_format,gmtime(pst))
 
 	def applyFilter(self):
-		target_filter = is_observable(self.constraints,self.gbt,\
-									  self.targets,time_range=self.time_range)
-		return Table(rows=[(t.name,t.ra.value,t.dec.value) for t in \
-					 compress(self.targets,target_filter)],names=('target id',\
-					 'right ascension','declination'),dtype=('u4','f8','f8'))
+		# - - - - - - - - - - - - - - - - UNIPROCESS EXECUTION - - - - - - - - - - - - - - - #
+		# target_filter = is_observable(self.constraints,self.gbt,\				 			 #
+		# 							  self.targets,time_range=self.time_range)				 #
+		# return Table(rows=[(t.name,t.ra.value,t.dec.value) for t in \				 		 #
+		# 			 compress(self.targets,target_filter)],names=('target id',\				 #
+		# 			 'right ascension','declination'),dtype=('u4','f8','f8'))				 #
+		# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -#
+		target_filter = mp_filter(8,is_observable,constraints=self.constraints,\
+												  observer=self.gbt,\
+												  data=self.targets,\
+												  time_range=self.time_range)
+		assert len(target_filter) > 0, "No observable targets found for given times and constraints."
+		return Table(rows=[(t.name,t.ra.value,t.dec.value) for t in target_filter],\
+					 names=('target id','right ascension','declination'),\
+					 dtype=('u8','f8','f8'))
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
