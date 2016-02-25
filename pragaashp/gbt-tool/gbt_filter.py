@@ -11,7 +11,7 @@ import astropy.units as u
 from astropy.time import Time
 from astropy.table import Table
 from pytz import timezone
-from astroplan import Observer, FixedTarget, is_observable
+from astroplan import Observer, FixedTarget, is_always_observable
 from sqlalchemy import create_engine, orm
 from sqlalchemy.ext.automap import automap_base
 
@@ -49,7 +49,7 @@ class GBTFilter():
 		# 		   for t_id,t_ra,t_dec in session.query(T.gal_id, T.ra, T.decl).\			 #
 		# 		   order_by(T.gal_id)]														 #
 		# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -#
-		data = session.query(T.gal_id, T.ra, T.decl).order_by(T.gal_id).all()
+		data = session.query(T.gal_id, T.name, T.ra, T.decl).order_by(T.gal_id).all()
 		targets = mp_build(8,FixedTarget,data)
 		session.close()
 		return targets
@@ -67,13 +67,14 @@ class GBTFilter():
 		# 			 compress(self.targets,target_filter)],names=('target id',\				 #
 		# 			 'right ascension','declination'),dtype=('u4','f8','f8'))				 #
 		# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -#
-		target_filter = mp_filter(8,is_observable,constraints=self.constraints,\
+		target_filter = mp_filter(8,is_always_observable,constraints=self.constraints,\
 												  observer=self.gbt,\
 												  data=self.targets,\
 												  time_range=self.time_range)
 		assert len(target_filter) > 0, "No observable targets found for given times and constraints."
-		return Table(rows=[(t.name,t.ra.value,t.dec.value) for t in target_filter],\
-					 names=('target id','right ascension','declination'),\
-					 dtype=('u8','f8','f8'))
+		# return Table(rows=[(t.name,t.ra.value,t.dec.value) for t in target_filter],\
+		# 			 names=('target name','right ascension','declination'),\
+		# 			 dtype=('S8','f8','f8'))
+		return target_filter
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #

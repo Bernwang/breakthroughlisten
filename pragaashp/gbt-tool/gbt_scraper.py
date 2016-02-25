@@ -122,14 +122,15 @@ class GBTScraper():
 if __name__ == "__main__":
 	date,days = None,5
 	
-	if sys.argv[1].startswith('date'): 
-		date = sys.argv[1].split('=')[1]
-		if len(sys.argv) > 2 and sys.argv[2].startswith('days'):
-			days = sys.argv[2].split('=')[1]
-	elif sys.argv[1].startswith('days'): 
-		days = sys.argv[1].split('=')[1]
-		if len(sys.argv) > 2 and sys.argv[2].startswith('date'):
-			date = sys.argv[2].split('=')[1]
+	if len(sys.argv) > 1:
+		if sys.argv[1].startswith('date'): 
+			date = sys.argv[1].split('=')[1]
+			if len(sys.argv) > 2 and sys.argv[2].startswith('days'):
+				days = sys.argv[2].split('=')[1]
+		elif sys.argv[1].startswith('days'): 
+			days = sys.argv[1].split('=')[1]
+			if len(sys.argv) > 2 and sys.argv[2].startswith('date'):
+				date = sys.argv[2].split('=')[1]
 
 	S = GBTScraper(date,days)
 	S.make()

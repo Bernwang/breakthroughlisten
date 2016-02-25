@@ -9,9 +9,11 @@ Note: For security reasons, querying the database will prompt the user for a pas
 from gbt_filter import *
 from gbt_scraper import *
 from getpass import getpass
+import astropy.units as u
 from astroplan import AirmassConstraint,\
 					  SunSeparationConstraint,\
-					  AltitudeConstraint
+					  AltitudeConstraint,\
+					  MoonSeparationConstraint
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
@@ -35,9 +37,9 @@ class GBTObservables():
 		e = self.schedule[event_index]
 		gbfilter = GBTFilter(getpass(),e.start,e.end,self.constraints)
 		result_table = gbfilter.applyFilter()
-		result_table.meta['start_time'] = e.start
-		result_table.meta['end_time'] = e.end
-		return result_table
+		# result_table.meta['start_time'] = e.start
+		# result_table.meta['end_time'] = e.end
+		return (gbfilter,result_table)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
@@ -49,7 +51,7 @@ Set Constraints -> Initialize Class -> Get Schedule Info -> Get Observable Targe
 """
 if __name__ == "__main__":
 	# - - - - - - MODIFY CONSTRAINTS HERE - - - - - - - - #
-	constraints = [AltitudeConstraint(None,None)]
+	constraints = [AltitudeConstraint(10*u.deg,80*u.deg)]
 	# - - - - - - - - - - - - - - - - - - - - - - - - - - #
 	gbto = GBTObservables(constraints)
 	gbto.getTargets(0).show_in_browser(jsviewer=True) 
