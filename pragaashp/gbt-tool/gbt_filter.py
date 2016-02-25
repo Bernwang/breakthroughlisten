@@ -35,8 +35,8 @@ class GBTFilter():
 		 			   elevation = 880 * u.m,\
 					   timezone = timezone('US/Eastern'))
 
-	def __launch__(self,pwd=None,host='localhost',user='root',db='BLtargets'):
-		route = "mysql://{0}:{1}@{2}/{3}".format(user,pwd,host,db)
+	def __launch__(self,pwd=None,host='127.0.0.1',user='root',db='BLtargets'):
+		route = "mysql://{0}:{1}@{2}:3307/{3}".format(user,pwd,host,db)
 		return create_engine(route,echo=False)
 
 	def __get_targets__(self):
