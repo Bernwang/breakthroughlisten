@@ -4,7 +4,21 @@ Tool to isolate observable targets (from a database) using times scraped from th
 
 **Update:** 
 
-  - Script updated to utilize Multiprocessing to allow up to 1.7x speedup over previous version.
+  - Uses multiprocessing to allow up to 1.7x speedup over previous version.
+  - Supports connecting to remote database server over ssh-tunnel.
+
+**Pre-requisites:**
+
+  - <a href="http://continuum.io/downloads">Anaconda</a> distribution.
+  - Astoplan package: `pip install astroplan`
+  - SQLAlchemy package: `pip install SQLAlchemy`
+  - Astropy package: `pip install astropy`
+
+**SSH Tunneling:**  
+
+For the script to run on the local machine, setup a ssh-tunnel on port 3307 to the remote server with the MySQL database: `ssh -L 3307:127.0.0.1:3306 `*`username@remote_host`*.
+
+> Note: `3307:localhost:3306` will not work due to how MySQL establishes connections through networks.
 
 **Usage:**
 
