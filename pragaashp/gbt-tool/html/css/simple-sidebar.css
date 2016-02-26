@@ -1,0 +1,234 @@
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Toggle Styles */
+body {
+    background-image: url(../img2/bkg.png);
+    background-position: top center;
+    background-repeat: repeat;
+}
+
+.menu-btn {
+    color: black;
+    text-align: right;
+    font-size: 14px;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+td, th {
+  text-align: center;
+}
+
+#menu-toggle {
+    border-style: solid;
+    border-color: #293742;
+    border-radius: 16px;
+    padding: 5px 16px;
+    border-width: 1px;
+}
+
+#menu-toggle:hover {
+    color: white;
+    text-decoration: none;
+    background-color: #293742;
+    font-weight: 200;
+}
+
+.img_box {
+    width: 75%;
+}
+
+#start-img, #end-img {
+    max-width: 100%;
+    border-radius: 20px 20px 0px 0px;
+    display: block;
+    margin: auto;
+}
+
+.fig-caption {
+    text-align: center;
+    border-radius: 0px 0px 20px 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: white;
+    font-weight: 200;
+    background-color: black;
+}
+
+#one-target {
+/*    display: none;*/
+}
+
+.t-name, .table-title {
+    font-weight: 300;
+}
+
+#target-image {
+  max-width: 100%;
+  display: block;
+  margin: auto;
+  border-radius: 20px;
+}
+
+#target-table {
+    display: none;
+}
+
+.empty-container {
+    padding: 20px 20px;
+}
+
+#wrapper {
+    padding-left: 0;
+    font-family: "Source Sans Pro","sans-serif";
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #293742;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#schedule-info {
+    line-height: 20px;
+    text-align: center;
+    color: white;
+    opacity: 0.5;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+#schedule-info.padder-up {
+  position: fixed;
+  width: 250px;
+  bottom: 0;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+    background-color: none;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.fa.fa-cubes, .fa.fa-cube, .fa.fa-table, .fa.fa-angle-right {
+    margin-left: -20px;
+    margin-right: 10px;
+}
+
+.fa.fa-angle-down {
+    margin-left: 120px;
+}
+
+.fa.fa-th {
+    margin-right: 10px;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    font-weight: 300;
+    text-decoration: none;
+    color: white;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.05);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand {
+    color: lightcyan;
+    opacity: 0.5;
+    font-weight: 300;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}

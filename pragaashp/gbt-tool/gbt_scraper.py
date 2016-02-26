@@ -48,7 +48,7 @@ class BLISPEntry():
 		return 'START:\t\t'+self.start+'\n'+'END:\t\t'+self.end+'\n'+\
 			   'TYPE:\t\t'+self.type+'\n'+'RECEIVERS:\t'+self.receivers+'\n'+\
 			   'FREQ (GHz):\t'+self.freq+'\n'+'PI:\t\t'+self.pi+'\n'+\
-			   'FRIEND:\t\t'+self.friend+'\n'
+			   'FRIEND:\t\t'+self.friend
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 

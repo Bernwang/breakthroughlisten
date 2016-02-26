@@ -18,7 +18,11 @@ from sqlalchemy.ext.automap import automap_base
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
 from astropy.utils import iers 
-iers.IERS.iers_table = iers.IERS_A.open(iers.IERS_A_URL)
+iers.IERS.iers_table = iers.IERS_A.open('./iers.all')
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+
+NUM_PROCESSES = 8
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
@@ -50,7 +54,7 @@ class GBTFilter():
 		# 		   order_by(T.gal_id)]														 #
 		# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -#
 		data = session.query(T.gal_id, T.name, T.ra, T.decl).order_by(T.gal_id).all()
-		targets = mp_build(8,FixedTarget,data)
+		targets = mp_build(NUM_PROCESSES,FixedTarget,data)
 		session.close()
 		return targets
 
@@ -67,14 +71,11 @@ class GBTFilter():
 		# 			 compress(self.targets,target_filter)],names=('target id',\				 #
 		# 			 'right ascension','declination'),dtype=('u4','f8','f8'))				 #
 		# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -#
-		target_filter = mp_filter(8,is_always_observable,constraints=self.constraints,\
-												  observer=self.gbt,\
-												  data=self.targets,\
-												  time_range=self.time_range)
+		target_filter = mp_filter(NUM_PROCESSES,is_always_observable,constraints=self.constraints,\
+		                                                             observer=self.gbt,\
+		                                                             data=self.targets,\
+		                                                             time_range=self.time_range)
 		assert len(target_filter) > 0, "No observable targets found for given times and constraints."
-		# return Table(rows=[(t.name,t.ra.value,t.dec.value) for t in target_filter],\
-		# 			 names=('target name','right ascension','declination'),\
-		# 			 dtype=('S8','f8','f8'))
 		return target_filter
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
