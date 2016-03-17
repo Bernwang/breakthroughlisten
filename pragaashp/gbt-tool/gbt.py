@@ -151,6 +151,8 @@ if __name__ == "__main__":
 	print '\nAcquiring Targets...\n'
 	F,T = G.getTargets(selected_index)
 
+	print '\nTargets Acquired: {0}'.format(len(T))
+
 	table = Table(rows=[(t.name,t.ra.value,t.dec.value) for t in T],\
 				  names=('target name','right ascension','declination'),\
 				  dtype=('S17','f8','f8'))
