@@ -1,5 +1,7 @@
 Casey Law set up some analysis tools in a Docker image, which is a bit like a virtual machine. This enables an easy install of the standard tools used to analyze pulsar data. We observe one pulsar at the beginning of each Breakthrough Listen observing run to make sure that the system is working properly. Ultimately we want to implement quality control and diagnostics on our data based on what the output plots look like.
 
+You might find Casey's introduction to how he's using Docker informative: http://caseyjlaw.github.io/docker-in-astronomy.html
+
 Steps to get the software running:
 
 1. Ensure you have a working Python installation. https://www.continuum.io/downloads is a good one.
@@ -25,7 +27,7 @@ PSR_J1840+5640 - name of the pulsar:
 	J - Julian epoch
 	1840 - Right Ascension 18 hours 40 minutes
 	5640 - Declination 56 degrees 40 minutes
-0004 - 
+0004 - this is the fourth observation of this source
 .fil - this is a filterbank file. For an explanation of the different kinds of files, read https://github.com/stevecroft/breakthrough-listen/blob/master/GBT/waterfall.txt
 
 6. Now run prepfold on the pulsar data. Pulsars emit regular pulses, but these are often too faint to be detected individually, so astronomers need to "fold" the data on the pulsar period. Then various statistics of the pulsar can be determined. This is also a good test of the integrity of the telescope, data, and our systems.
