@@ -14,6 +14,8 @@ from glob import glob
 
 from astroplan.plots import plot_sky
 from astroplan.utils import time_grid_from_range as genTimeSequence
+# import matplotlib
+# matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 from astropy.table import Table
@@ -79,6 +81,7 @@ class GBTObservables():
 		total = len(filtered_targets)
 		for i,t in enumerate(filtered_targets):
 			self.__single_target_path_plot__(gbt_filter_obj.gbt,times,t,i,total)
+		# mp_plot(8,self.__single_target_path_plot__,filtered_targets,gbt_filter_obj.gbt,times)
 
 	def __multi_target_plot__(self,observer,time,targets,name):
 		cmap = cm.Set1
@@ -153,9 +156,9 @@ if __name__ == "__main__":
 
 	print '\nTargets Acquired: {0}'.format(len(T))
 
-	table = Table(rows=[(t.name,t.ra.value,t.dec.value) for t in T],\
-				  names=('target name','right ascension','declination'),\
-				  dtype=('S17','f8','f8'))
+	# table = Table(rows=[(t.name,t.ra.value,t.dec.value) for t in T],\
+	# 			  names=('target name','right ascension','declination'),\
+	# 			  dtype=('S17','f8','f8'))
 
 	print '\nGenerating Plots...'
 	G.generateGlobalPlots(F,T)

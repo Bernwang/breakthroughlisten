@@ -46,7 +46,7 @@ class GBTFilter():
 	def __get_targets__(self):
 		Base = automap_base()
 		Base.prepare(self.engine,reflect=True)
-		T = Base.classes.get('5_50_pc_sample')
+		T = Base.classes.get('five_50_pc_sample')
 		session = orm.Session(self.engine)
 		# - - - - - - - - - - - - - - - - UNIPROCESS EXECUTION - - - - - - - - - - - - - - - #
 		# targets = [FixedTarget(coord=SkyCoord(ra=t_ra*u.deg,dec=t_dec*u.deg),name=t_id) \  #
