@@ -41,7 +41,7 @@ def mp_build(nprocs,operator,data):
     def worker(partition,out_queue):
         output = []
         for t_id,t_name,t_ra,t_dec in partition:
-            output.append(operator(coord=SkyCoord(ra=t_ra*u.hr,dec=t_dec*u.deg),name=t_name))
+            output.append(operator(coord=SkyCoord(ra=t_ra,dec=t_dec,unit=(u.hourangle,u.deg)),name=t_name))
         out_queue.put(output)
 
     out_queue = Queue()
@@ -62,3 +62,29 @@ def mp_build(nprocs,operator,data):
         p.join()
 
     return result
+
+# def mp_plot(nprocs,operator,data,observer,times):
+
+#     total = len(data)
+
+#     def worker(partition,start_index,out_queue):
+#         for i,t in enumerate(partition):
+#             operator(observer,times,t,i+start_index,total)
+#         out_queue.put(True)
+
+#     out_queue = Queue()
+#     chunksize = int(ceil(total/float(nprocs)))
+#     processes = []
+
+#     for i in range(nprocs):
+#         p = Process(target=worker,args=(data[chunksize*i:chunksize*(i+1)],chunksize*i,out_queue))
+#         processes.append(p)
+#         p.start()
+
+#     result = []
+
+#     for i in range(nprocs): 
+#         result.append(out_queue.get())
+
+#     for p in processes: 
+#         p.join()
