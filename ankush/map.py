@@ -26,12 +26,12 @@ def convert_to_degrees(s,hours = False):
 	x = s.split()
 	angle = 0
 	if hours:
-		angle = angle + float(x[0])*15 # to convert from hours to degrees, multiply by 15
+		hrs = float(x[0]) + float(x[1])/float(60) + float(x[2])/float(3600)
+		angle = hrs * 15 # to convert from hours to degrees, multiply by 15
 	else:
 		angle = float(x[0])
-	
-	angle = angle + float(x[1])/float(60) # to convert from minutes to degrees, divide by 60
-	angle = angle + float(x[2])/float(3600) # to convert from seconds to degrees, divide by 3600
+		angle = angle + float(x[1])/float(60) # to convert from minutes to degrees, divide by 60
+		angle = angle + float(x[2])/float(3600) # to convert from seconds to degrees, divide by 3600
 	return angle
 
 
